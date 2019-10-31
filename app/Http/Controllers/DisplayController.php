@@ -12,10 +12,13 @@ class DisplayController extends Controller
 
     public function index(Request $request) {
     	$employees = Employee::get();
-
+        $competencies = Competency::orderBy('id', 'asc')->get();
+        $pluckCompetencies = $competencies->pluck('name');
+        $scores = $this->allScore();
     	$data = array(
     		'employees' => $employees,
-
+            'competencies' => $pluckCompetencies->all(),
+            'scores' => $scores,
     	);
     	return view('display.index', $data);
     }
@@ -54,5 +57,45 @@ class DisplayController extends Controller
 
     	// die();
     	return $scores;
+    }
+
+    public function front(Request $request) {
+        $competencies = Competency::orderBy('id', 'asc')->get();
+        $pluckCompetencies = $competencies->pluck('name');
+        $scores = $this->allScore();
+
+        $data = array(
+            // 'employee' => $employee,
+            'competencies' => $pluckCompetencies->all(),
+            'scores' => $scores,
+        );
+        return view('display.front', $data);
+    }
+
+    protected function allScore() {
+        $competencies = Competency::with(['details' => function($query){
+                                $query->with('detailsemployee');
+                            }])
+                            ->orderBy('id', 'asc')
+                            ->get();
+
+        $scores = [];
+
+        foreach ($competencies as $competency) {
+            $score = 0;
+            foreach ($competency->details as $details) {
+                $countEmployee = $details->detailsemployee->count();
+                $sumScore = 0;
+                foreach ($details->detailsemployee as $detail) {
+                    $sumScore = $sumScore + $detail->score;
+                }
+                $avgScore = $sumScore/$countEmployee;
+                $score = $score + ( ($avgScore/5) * $details->weight );
+            }
+            array_push($scores, $score);
+        }
+
+
+        return $scores;
     }
 }

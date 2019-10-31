@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
 	<div class="row pb-5">
 		<div class="col-md-12 justify-content-center">
 			<h3>{{ $employee->name }}</h3>
@@ -39,9 +39,9 @@
 		    datasets: [
 			    {
 			    	label: 'Competencies',
-			    	backgroundColor: color(window.chartColors.red).alpha(0.2).rgbString(),
-					borderColor: window.chartColors.red,
-					pointBackgroundColor: window.chartColors.red,
+	    	    	backgroundColor: color(window.chartColors.red).alpha(0.6).rgbString(),
+	    			borderColor: window.chartColors.red,
+	    			pointBackgroundColor: window.chartColors.red,
 			        data: <?php echo json_encode($scores); ?>
 			    }
 		    ]
@@ -59,7 +59,14 @@
 					beginAtZero: true,
 					suggestedMin: 0,
 					suggestedMax: 100
-				}
+				},
+				gridLines: {
+	            	lineWidth: 1,
+	            	color: 'rgba(0, 0, 0, 0.8)',
+	        	},
+	        	angleLines: {
+	        		color: 'rgba(0, 0, 0, 0.8)',
+	        	}
 			}
 		}
 	};

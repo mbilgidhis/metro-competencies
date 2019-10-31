@@ -12,34 +12,10 @@
 		</div>
 	</div>
 </div>
-
-<div class="container">
-	<div class="row justify-content-center">
-		<div class="col-md-12 table-responsive">
-			@include('layouts.check')
-			<table class="table">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($employees as $employee)
-						<tr>
-							<td>{{ $employee->id }}</td>
-							<td> <a href="{{ route('display.show',['id' => $employee->id]) }}" target="_blank">{{ $employee->name }}</a></td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
-		</div>
-	</div>
-</div>
 @endsection
 
 @section('styles')
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" /> --}}
 <style>
 	canvas {
 		-moz-user-select: none;
@@ -50,11 +26,9 @@
 @endsection
 
 @section('scripts')
-<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.1/dist/Chart.min.js"></script>
 <script src="{{ asset('js/utils.js') }}"></script>
 <script>
-	$('.table').DataTable();
 	var color = Chart.helpers.color;
 
 	var config = {
@@ -98,5 +72,6 @@
 	window.onload = function() {
 		window.myRadar = new Chart(document.getElementById('canvas'), config);
 	};
+	
 </script>
 @endsection

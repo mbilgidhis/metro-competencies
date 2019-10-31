@@ -15,7 +15,8 @@
 //     return view('welcome');
 // });
 
-Route::get('/', 'DisplayController@index')->name('display');
+Route::get('/', 'DisplayController@index')->name('index');
+// Route::get('/list', 'DisplayController@index')->name('list');
 Route::get('/display/{id}', 'DisplayController@show')->where('id', '[0-9]+')->name('display.show');
 
 Auth::routes();
