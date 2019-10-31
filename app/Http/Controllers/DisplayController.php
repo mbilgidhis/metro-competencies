@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Competency;
+use App\DetailEmployee;
 
 class DisplayController extends Controller
 {
@@ -26,12 +27,19 @@ class DisplayController extends Controller
     public function show(Request $request, $id) {
     	$employee = Employee::findOrFail($id);
     	$competencies = Competency::orderBy('id', 'asc')->get();
+        $details = Competency::with(['details' => function($query) use($id){
+                                $query->with(['detailsemployee' => function($query) use($id){
+                                    $query->where('employee_id', $id);
+                                }]);
+                            }])
+                            ->get();
     	$pluckCompetencies = $competencies->pluck('name');
     	$scores = $this->getScore($employee->id);
     	$data = array(
     		'employee' => $employee,
     		'competencies' => $pluckCompetencies->all(),
     		'scores' => $scores,
+            'details' => $details,
     	);
     	return view('display.show', $data);
     }

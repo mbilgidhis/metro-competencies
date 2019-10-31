@@ -12,11 +12,47 @@
 			</div>
 		</div>
 	</div>
+
+
+</div>
+
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			@foreach($details as $detail)
+				<div class="table-responsive pb-5">
+					<table class="table">
+						<thead>
+							<tr>
+								<th colspan="{{ $detail->details->count() }}" class="text-center">{{ $detail->name }}</th>
+							</tr>
+							<tr>
+								@foreach($detail->details as $det)
+									<th class="text-center">{{ $det->name . ' (' . $det->weight . ')' }}</th>
+								@endforeach
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+							@foreach($detail->details as $det)
+								@foreach($det->detailsemployee as $d)
+									@if( $d->competency_id == $detail->id)
+										<td class="text-center">{{ $d->score }}</td>
+									@endif
+								@endforeach
+							@endforeach
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			@endforeach
+		</div>
+	</div>
 </div>
 @endsection
 
 @section('styles')
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" /> --}}
+
 <style>
 	canvas {
 		-moz-user-select: none;
