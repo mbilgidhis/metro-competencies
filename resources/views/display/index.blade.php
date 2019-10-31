@@ -83,7 +83,10 @@
 				ticks: {
 					beginAtZero: true,
 					suggestedMin: 0,
-					suggestedMax: 100
+					suggestedMax: 100,
+					minor: {
+						fontSize: 14
+					}
 				},
 				gridLines: {
 	            	lineWidth: 1,
@@ -91,6 +94,10 @@
 	        	},
 	        	angleLines: {
 	        		color: 'rgba(0, 0, 0, 0.8)',
+	        	},
+	        	pointLabels: {
+	        		fontSize: 14,
+	        		lineHeight: 1.8
 	        	}
 			}
 		}
