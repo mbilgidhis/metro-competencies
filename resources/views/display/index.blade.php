@@ -22,13 +22,23 @@
 					<tr>
 						<th>No.</th>
 						<th>Name</th>
+						<th>Average</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach($employees as $employee)
-						<tr>
+						@php
+							if( $employee->average >= 70 )
+								$class = 'table-danger';
+							else if( $employee->average >= 40 )
+								$class = 'table-warning';
+							else
+								$class = 'table-light';
+						@endphp
+						<tr class="{{ $class }}">
 							<td>{{ $employee->id }}</td>
 							<td> <a href="{{ route('display.show',['id' => $employee->id]) }}" target="_blank">{{ $employee->name }}</a></td>
+							<td>{{ $employee->average }}</td>
 						</tr>
 					@endforeach
 				</tbody>
