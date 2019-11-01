@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Competency;
 use App\Detail;
+use App\Employee;
+use App\DetailEmployee;
 
 class DetailController extends Controller
 {
@@ -38,8 +40,17 @@ class DetailController extends Controller
     	$detail->name = $request->name;
     	$detail->competency_id = $request->competency;
     	$detail->weight = $request->weight;
-    	if ( $detail->save() )
-    		return redirect(route('detail.index'));
+    	if ( $detail->save() ) {
+            $employees = Employee::get();
+            foreach ($employees as $employee) {
+                $detailEmp = new DetailEmployee;
+                $detailEmp->employee_id = $employee->id;
+                $detailEmp->competency_id = $detail->competency_id;
+                $detailEmp->score = 0;
+                $detailEmp->save();
+            }
+            return redirect(route('detail.index'));
+        }
     }
 
     public function edit(Request $request, $id) {
