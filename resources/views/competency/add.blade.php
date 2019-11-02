@@ -19,7 +19,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="name">Name</label>
-					<input type="text" name="name" id="name" class="form-control" placeholder="Name" required autofocus>
+					<input type="text" name="name" id="name" class="form-control" value="{{ old('name')  }}" placeholder="Name" required autofocus>
 				</div>
 				<div class="form-group">
 					<label for="description">Description</label>

@@ -19,7 +19,7 @@
 				@csrf
 				<div class="form-group">
 					<label for="name">Name</label>
-					<input type="text" name="name" id="name" class="form-control" placeholder="Name" required autofocus>
+					<input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" placeholder="Name" required autofocus>
 				</div>
 				<div class="form-group">
 					<label for="competency">Competency</label>
@@ -32,7 +32,7 @@
 				</div>
 				<div class="form-group">
 					<label for="weight">Weight</label>
-					<input type="number" name="weight" id="weight" class="form-control" placeholder="Weight" required>
+					<input type="number" name="weight" id="weight" class="form-control" value="{{ old('weight') }}" placeholder="Weight" required>
 				</div>
 				<div class="form-group text-right">
 					<button class="btn btn-sm btn-success" type="submit">Save</button>

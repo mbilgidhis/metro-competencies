@@ -36,6 +36,11 @@ class DetailController extends Controller
     	    'weight' => 'integer|required'
     	]);
 
+        $competency = Competency::with('details')->findOrFail($request->competency);
+
+        if( $competency->details->sum('weight') + $request->weight > 100 ) 
+            return redirect(route('detail.add'))->withErrors(['Weight is over 100'])->withInput($request->all());
+
     	$detail = new Detail;
     	$detail->name = $request->name;
     	$detail->competency_id = $request->competency;
@@ -46,6 +51,7 @@ class DetailController extends Controller
                 $detailEmp = new DetailEmployee;
                 $detailEmp->employee_id = $employee->id;
                 $detailEmp->competency_id = $detail->competency_id;
+                $detailEmp->detail_id = $detail->id;
                 $detailEmp->score = 0;
                 $detailEmp->save();
             }
@@ -70,6 +76,15 @@ class DetailController extends Controller
     		'competency' => 'integer|required',
     		'weight' => 'integer|required'
     	]);
+
+        $competency = Competency::with(['details' => function($query) use($request){
+                                $query->where('id', '!=', $request->id);
+                        }])
+                        ->findOrFail($request->competency);
+
+        if( $competency->details->sum('weight') + $request->weight > 100 ) 
+            return redirect(route('detail.edit', ['id' => $request->id]))->withErrors(['Weight is over 100']);
+
     	$detail = Detail::findOrFail($request->id);
     	$detail->name = $request->name;
     	$detail->competency_id = $request->competency;
