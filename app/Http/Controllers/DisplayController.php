@@ -13,6 +13,7 @@ class DisplayController extends Controller
 
     public function index(Request $request) {
     	$employees = Employee::get();
+        // return $employees;
         $competencies = Competency::orderBy('id', 'asc')->get();
         $pluckCompetencies = $competencies->pluck('name');
         $scores = $this->allScore();

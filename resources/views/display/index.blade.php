@@ -22,6 +22,15 @@
 					<tr>
 						<th>No.</th>
 						<th>Name</th>
+						@foreach( $employees as $employee)
+							@if ( $loop->index == 0 )
+								@foreach( $employee->cummulative as $cummulative)
+									@foreach( $cummulative as $key => $value)
+									<th>{{ $key }}</th>
+									@endforeach
+								@endforeach
+							@endif
+						@endforeach
 						<th>Average</th>
 					</tr>
 				</thead>
@@ -38,6 +47,11 @@
 						<tr class="{{ $class }}">
 							<td>{{ $employee->id }}</td>
 							<td> <a href="{{ route('display.show',['id' => $employee->id]) }}" target="_blank">{{ $employee->name }}</a></td>
+							@foreach( $employee->cummulative as $cummulative )
+								@foreach( $cummulative as $key => $value)
+									<td>{{ $value }}</td>
+								@endforeach
+							@endforeach
 							<td>{{ $employee->average }}</td>
 						</tr>
 					@endforeach
